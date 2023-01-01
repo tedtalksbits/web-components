@@ -14,3 +14,5 @@
 // document.body.appendChild(myTable.render());
 
 // console.log(myTable);
+
+console.log('Hello World there');
