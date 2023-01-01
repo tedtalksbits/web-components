@@ -1,0 +1,24 @@
+{
+  "name": "web-components",
+  "version": "1.0.0",
+  "description": "This repository contains the source code for the Web Components. The Web Components are a set of web platform APIs that allow you to create new custom, reusable, encapsulated HTML tags to use in web pages and web apps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tedtalksbits/web-components.git"
+  },
+  "keywords": [],
+  "author": "Teadane Blake",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tedtalksbits/web-components/issues"
+  },
+  "homepage": "https://github.com/tedtalksbits/web-components#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
