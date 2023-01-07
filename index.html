@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./src/static/css/styles.css" />
+        <link rel="stylesheet" href="./src/static/css/tables.css" />
+        <title>Document</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./src/static/css/styles.css">
-    <link rel="stylesheet" href="./src/static/css/tables.css">
-    <title>Document</title>
-</head>
+    <body>
+        <div class="container" id="table1">
+            <h3>Table with pagination</h3>
+        </div>
+        <div class="container" id="table2">
+            <h3>Table with search</h3>
+        </div>
+        <div class="container" id="table3"></div>
+        <div class="container">
+            <button id="alertBtn">show alert box</button>
+        </div>
+        <div class="container">
+            <button id="modalBtn">show modal</button>
+        </div>
+        <div class="container">
+            <button id="customModalBtn">show custom modal</button>
+        </div>
 
-<body>
-    <div id="table2"></div>
-    <script type="module" src="./src/static/js/script.js"></script>
-</body>
+        <div data-modal="custom1">
+            <div class="content">
+                <h3>Hey man</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Quibusdam at fugiat fugit pariatur quod ullam nisi possimus
+                    eligendi beatae ab repellendus necessitatibus minus ducimus
+                    iusto cupiditate suscipit doloremque, odit nemo ipsum,
+                    commodi rem, cumque qui? Porro totam doloremque ipsa
+                    tempore.
+                </p>
+            </div>
+        </div>
 
+        <div class="container" style="border: 1px solid red">
+            <button id="menuBtn1" style="border: 1px solid blue">
+                show menu
+            </button>
+        </div>
+
+        <script type="module" src="./src/static/js/script.js"></script>
+    </body>
 </html>

@@ -62,15 +62,6 @@ export class Table {
             throw new Error('Types are not defined');
         }
         const type = this.types[column];
-        console.log(
-            'sorting by ' +
-                column +
-                ' in ' +
-                order +
-                ' order' +
-                ' of type ' +
-                type
-        );
 
         if (type === 'number') {
             this.data.sort((a, b) => {
@@ -149,7 +140,7 @@ export class Table {
 
     filter(column, value) {
         const filteredData = this.data.filter((row) =>
-            row[column].toLowerCase().includes(value.toLowerCase())
+            row[column].toString().toLowerCase().includes(value.toLowerCase())
         );
         const tableBody = this.table.querySelector('tbody');
         tableBody.innerHTML = this.renderBody(filteredData);
@@ -174,8 +165,6 @@ export class Table {
 
         let column = searchOptions.value;
         let value = '';
-
-        console.log(column);
 
         searchOptions.addEventListener('change', (e) => {
             column = e.target.value;
