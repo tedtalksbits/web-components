@@ -4,16 +4,17 @@ export class Menu {
         this.toggler = toggler;
         this.position = position;
         this.width = width;
-        this.menu = document.createElement('div');
 
-        this.render();
+        // this.render();
+        this.init();
+        this.isShowing = false;
     }
     render() {
         // create styles for the menu
         this.addMenuStyles();
         // Create the menu
+        this.menu = document.createElement('div');
         this.menu.classList.add('menu');
-        this.menu.classList.add('hidden');
         // Create the menu items
         this.menuItems = document.createElement('ul');
         this.menuItems.classList.add('menu-items');
@@ -21,9 +22,9 @@ export class Menu {
             let menuItem = document.createElement('li');
             menuItem.classList.add('menu-item');
             menuItem.innerHTML = item.text;
-            menuItem.addEventListener('click', () => {
-                item.callback();
-                this.hide();
+            menuItem.addEventListener('click', async () => {
+                await item.callback();
+                this.toggle();
             });
             this.menuItems.appendChild(menuItem);
         });
@@ -31,12 +32,11 @@ export class Menu {
         // Add the menu to the absolute position of the toggler
         this.toggler.parentNode.style.position = 'relative';
         this.toggler.parentNode.appendChild(this.menu);
-        // Position the menu
 
         // Add the event listener to the toggler
-        this.toggler.addEventListener('click', () => {
-            this.toggle();
-        });
+        // this.toggler.addEventListener('click', () => {
+        //     this.toggle();
+        // });
     }
     addMenuStyles() {
         const style = document.createElement('style');
@@ -49,13 +49,17 @@ export class Menu {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                padding: 20px;
+                padding: 5px;
                 position: absolute;
                 z-index: 100;
                 min-width: ${this.width};
+                opacity: 1;
+                animation: animateIn 0.25s ease 0s;
+
             }
             .menu.hidden {
-                display: none;
+                opacity: 0;
+                transition: opacity 0.25s;
             }
             .menu-items {
                 list-style: none;
@@ -69,15 +73,44 @@ export class Menu {
             .menu-item:hover {
                 background-color: #eee;
             }
+
+            @keyframes animateIn {
+                0% {
+                    opacity: 0;
+                    -webkit-transform: scale3d(.3,.3,.3);
+                    transform: scale3d(.3,.3,.3);
+                }
+                60% {
+                    opacity: 1;
+                }
+            }
         `;
         document.head.appendChild(style);
     }
     toggle() {
-        this.menu.classList.toggle('hidden');
-        this.positionMenu();
+        console.log('toggle');
+        // this.menu.classList.toggle('hidden');
+        this.isShowing = !this.isShowing;
+        if (this.isShowing) {
+            console.log('showing');
+            this.render();
+            this.positionMenu();
+        } else {
+            console.log('hiding');
+
+            this.menu.classList.add('hidden');
+            setTimeout(() => {
+                this.menu.remove();
+            }, 250);
+        }
     }
     hide() {
         this.menu.classList.add('hidden');
+    }
+    init() {
+        this.toggler.addEventListener('click', () => {
+            this.toggle();
+        });
     }
 
     positionMenu() {
