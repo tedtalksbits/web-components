@@ -102,7 +102,7 @@ customModalBtn.addEventListener('click', () => {
     ========================================
 */
 const menuBtn1 = document.getElementById('menuBtn1');
-const menu1 = new Menu({
+new Menu({
     items: [
         {
             text: 'Home',
@@ -124,5 +124,4 @@ const menu1 = new Menu({
         },
     ],
     toggler: menuBtn1,
-    position: 'right',
 });

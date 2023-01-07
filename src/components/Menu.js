@@ -1,8 +1,7 @@
 export class Menu {
-    constructor({ items, toggler, position = 'bottom', width = '500px' } = {}) {
+    constructor({ items, toggler, width = '500px' } = {}) {
         this.items = items;
         this.toggler = toggler;
-        this.position = position;
         this.width = width;
 
         // this.render();
@@ -10,8 +9,6 @@ export class Menu {
         this.isShowing = false;
     }
     render() {
-        // create styles for the menu
-        this.addMenuStyles();
         // Create the menu
         this.menu = document.createElement('div');
         this.menu.classList.add('menu');
@@ -33,17 +30,26 @@ export class Menu {
         this.toggler.parentNode.style.position = 'relative';
         this.toggler.parentNode.appendChild(this.menu);
 
-        // Add the event listener to the toggler
-        // this.toggler.addEventListener('click', () => {
-        //     this.toggle();
-        // });
+        // remove menu when clicking outside of it
+
+        document.addEventListener('click', (e) => {
+            if (e.target !== this.toggler && !this.menu?.contains(e.target)) {
+                if (this.menu) {
+                    this.isShowing = false;
+                    this.menu.classList.add('hidden');
+                    this.removeMenu();
+                }
+            }
+        });
     }
     addMenuStyles() {
         const style = document.createElement('style');
+        style.dataset.for = 'menu';
         style.innerHTML = `
+
+
             .menu {
                 background-color: #fff;
-                border: 1px solid #000;
                 border-radius: 5px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
                 display: flex;
@@ -74,6 +80,19 @@ export class Menu {
                 background-color: #eee;
             }
 
+            // .menu::before {
+            //     content: '';
+            //     position: absolute;
+            //     width: 0;
+            //     height: 0;
+            //     border-style: solid;
+            //     border-width: 0 5px 5px 5px;
+            //     border-color: transparent transparent #fff transparent;
+            //     top: -5px;
+            //     left: 1rem;
+            //     transform: translateX(-50%);
+            // }
+
             @keyframes animateIn {
                 0% {
                     opacity: 0;
@@ -88,64 +107,48 @@ export class Menu {
         document.head.appendChild(style);
     }
     toggle() {
-        console.log('toggle');
-        // this.menu.classList.toggle('hidden');
         this.isShowing = !this.isShowing;
         if (this.isShowing) {
-            console.log('showing');
             this.render();
             this.positionMenu();
         } else {
-            console.log('hiding');
-
-            this.menu.classList.add('hidden');
-            setTimeout(() => {
-                this.menu.remove();
-            }, 250);
+            this.removeMenu();
         }
     }
     hide() {
         this.menu.classList.add('hidden');
     }
+    removeMenu() {
+        this.menu.classList.add('hidden');
+        setTimeout(() => {
+            this.menu.remove();
+        }, 250);
+
+        this.isShowing = false;
+    }
     init() {
+        // create styles for the menu
+        this.addMenuStyles();
         this.toggler.addEventListener('click', () => {
             this.toggle();
         });
     }
 
     positionMenu() {
-        switch (this.position) {
-            case 'bottom':
-                this.menu.style.top = `${
-                    this.toggler.offsetTop + this.toggler.offsetHeight
-                }px`;
+        this.menu.style.top = `${
+            this.toggler.offsetTop + this.toggler.offsetHeight + 5
+        }px`;
+        console.log(this.toggler.getBoundingClientRect());
+        this.menu.style.right = '1rem';
+    }
 
-                break;
-            case 'top':
-                this.menu.style.bottom = `${this.toggler.offsetTop}px`;
-                break;
-            case 'left':
-                const rightSideOfToggler =
-                    this.toggler.offsetWidth + this.toggler.offsetLeft;
-                this.menu.style.left = `${rightSideOfToggler}px`;
-                break;
-            case 'right':
-                console.log('here!!!!!!!!!!!!!!');
-                console.log(this.toggler.offsetLeft);
-                console.log(this.menu.offsetWidth);
-                console.log(this.toggler);
-                console.log(this.menu.getBoundingClientRect());
-                if (this.toggler.offsetLeft < this.menu.offsetWidth) {
-                    console.log(this.menu.offsetWidth);
-                    this.menu.style.left = `${this.toggler.offsetLeft}px`;
-                }
-                break;
+    removeMenuStyles() {
+        const style = document.querySelector('[data-for="menu"]');
+        console.log('removing style tag');
+        setTimeout(() => {
+            style.remove();
+        }, 150);
 
-            default:
-                this.menu.style.top = `${
-                    this.toggler.offsetTop + this.toggler.offsetHeight
-                }px`;
-                break;
-        }
+        console.log('removed style tag');
     }
 }
